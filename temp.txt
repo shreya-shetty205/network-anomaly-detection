@@ -1,0 +1,9 @@
+Python 3.11.5
+
+
+
+# labels to  attack class
+['apache2','back','land','neptune','mailbomb','pod','processtable','smurf','teardrop','udpstorm','worm']=>'Dos'
+['ftp_write','guess_passwd','httptunnel','imap','multihop','named','phf','sendmail','snmpgetattack','snmpguess','spy','warezclient','warezmaster','xlock','xsnoop']=>'R2L'
+['ipsweep','mscan','nmap','portsweep','saint','satan']=>'Probe'
+['buffer_overflow','loadmodule','perl','ps','rootkit','sqlattack','xterm']=>'U2R'

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - NetSecureAI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            /* Prevent scrollbars */
+        }
+
+        /* Background video styling */
+        #bg-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        /* Dark overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(4, 14, 41, 0.85);
+            /* dark navy overlay */
+            z-index: -1;
+        }
+
+
+        .auth-container {
+    position: fixed;  /* FIXED so it doesn't shift */
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-box {
+    background: rgba(27, 42, 89, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    width: 350px;
+    text-align: center;
+    position: relative; /* prevents upward jump */
+    will-change: transform;
+}
+
+
+        .auth-box h2 {
+            margin-bottom: 20px;
+            color: #d9f9ff;
+            /* Neon cyan accent */
+        }
+
+        .auth-box input {
+            width: 90%;
+            padding: 15px 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            background: #0f1c3f;
+            /* dark navy input */
+            color: #fff;
+        }
+
+        .auth-box input:focus {
+            outline: 2px solid #e0faff;
+        }
+
+        .auth-box button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            background: #d7f8ff;
+            color: #0f1c3f;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .auth-box button:hover {
+            background: #1a72ef;
+        }
+
+        .auth-box p {
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .auth-box a {
+            color: #e0faff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="static/images/vid4.mp4" type="video/mp4">
+    </video>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Register</h2>
+            <form action="/register" method="POST">
+                 {% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        {% for category, message in messages %}
+        
+        Swal.fire({
+            icon: "{{ 'success' if category == 'success' else 'error' }}",
+            title: "{{ message }}",
+            confirmButtonColor: "{{ '#3085d6' if category == 'success' else '#d33' }}"
+        });
+
+        {% endfor %}
+    });
+</script>
+{% endif %}
+{% endwith %}
+                <input type="text" name="name" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+               <input type="password" name="password" placeholder="Password" required
+       pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}"
+       title="Password must be at least 8 characters, include uppercase, lowercase, number and special character">
+
+                <button type="submit">Register</button>
+            </form>
+            <p style="color:white">Already have an account? <a href="/login">Login</a></p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,500 @@
+  {% extends "base.html" %}
+  {% block body %}
+  <style>
+  .chatbot-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: linear-gradient(135deg, #435297ff, #1c2759ff);
+    color: white;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    z-index: 999;
+  }
+
+  .chatbot-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Chat Container */
+  .chatbot-container {
+    position: fixed;
+    bottom: 100px;
+    right: 25px;
+    width: 350px;
+    height: 480px;
+    background: #ece5dd;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.3s ease;
+    z-index: 1000;
+   
+  touch-action: auto;
+}
+
+  
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Header */
+  .chatbot-header {
+    background: #1c2759ff;
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .chat-logo {
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+  }
+
+  .close-btn {
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  /* Messages Area */
+  .chatbot-messages {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #1c2759ff #ece5dd;
+    -webkit-overflow-scrolling: touch;    /* FIXED */
+
+  }
+
+  .chatbot-messages::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .chatbot-messages::-webkit-scrollbar-thumb {
+    background-color: #1c2759ff;
+    border-radius: 10px;
+  }
+
+  /* Chat Bubbles */
+  .chat-bubble {
+    padding: 10px 14px;
+    border-radius: 18px;
+    max-width: 80%;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .user-msg {
+    align-self: flex-end;
+    background: #dcf8c6;
+    color: #000;
+    border-bottom-right-radius: 4px;
+  }
+
+  .bot-msg {
+    align-self: flex-start;
+    background: #fff;
+    color: #000;
+    border-bottom-left-radius: 4px;
+    border: 1px solid #ddd;
+  }
+
+  /* Input Area */
+  .chatbot-input {
+    display: flex;
+    border-top: 1px solid #ccc;
+    background: #f0f0f0;
+  }
+
+  .chatbot-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    background: #f0f0f0;
+    font-size: 14px;
+  }
+
+  .chatbot-input button {
+    background: #1c2759ff;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .chatbot-input button:hover {
+    background: #1c2759ff;
+  }
+</style>
+
+        <section class="sub-banner-con float-left w-100 position-relative">
+            <div class="container">
+                <div class="sub-banner-inner-wrap">
+                    <h1>Detection</h1>
+                    <p>Empowering Your Business with Intelligent AI Solutions — From <br>
+                        Automation to Personalization, We Deliver Impact.</p>
+                    <div class="breadcrumb-con d-inline-block">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Detection</li>
+                        </ol>
+                    </div>
+                    <!-- sub banner inner wrap -->
+                </div>
+                <!-- container -->
+            </div>
+            <!-- sub banner con -->
+        </section>
+        <!--  -->
+    </div>
+    <!-- Our SERVICES SECTION -->
+
+
+
+<section class="section-dark text-light py-5" style="background:#0a0f2d;">
+
+    <div class="container">
+        <div class="row justify-content-center">
+        <p class="section-dark text-light py-5" style="background:#0a0f2d;">
+    Please enter <strong>42 network feature values</strong> in the same order as required by the system
+    (including protocol type, service type, flag, TTL, byte counts, and statistical features).  
+    Values must be <strong>comma-separated</strong> and strictly follow the dataset format.
+</p>
+            <div class="col-lg-8 text-center wow fadeInUp" data-wow-delay=".2s">
+                <h3 class="mb-4">Enter Packet Data for Anomaly Detection</h3>
+
+                <form id="predictionForm" novalidate="novalidate">
+                   <textarea 
+    class="form-control w-75 mx-auto p-3 rounded-1 text-light border-1 border-secondary"
+    style="background:#0a0f2d;"
+    name="value" id="message" cols="30" rows="9"
+    onfocus="this.placeholder=''" 
+    onblur="this.placeholder='Enter Packet Data (comma separated)'" 
+    placeholder="Enter Packet Data (comma separated values)">
+</textarea>
+
+                   <div class="mt-4 d-flex justify-content-center">
+
+    <button type="submit" 
+        class="px-4 py-2"
+        style="background: linear-gradient(135deg, #7b2ff7, #9f5bff);
+               color:white; border:none; border-radius:8px;
+               font-weight:600; letter-spacing:0.5px;
+               box-shadow:0 4px 15px rgba(123,47,247,0.4);
+               transition:0.25s ease;">
+        <span>Check</span>
+    </button>
+
+    <button type="button"
+        onclick="startLiveDetection()"
+        class="px-4 py-2"
+        style="background: linear-gradient(135deg, #ff4bff, #ff77ff);
+               color:white; border:none; border-radius:8px;
+               font-weight:600; letter-spacing:0.5px;
+               box-shadow:0 4px 15px rgba(255,71,255,0.4);
+               transition:0.25s ease;
+               margin-left:30px;">   <!-- 👈 Added gap -->
+        <span>Live Detection</span>
+    </button>
+
+</div>
+
+                </form>
+
+                <!-- Result Card -->
+                <div id="result" class="mt-5"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="chatbot-button" onclick="toggleChat()">💬</div>
+    <div class="chatbot-container" id="chatContainer" style="display: none;">
+      <div class="chatbot-header">
+        AI Assistant
+        <span class="close-btn" onclick="toggleChat()">✖</span>
+      </div>
+      <div class="chatbot-messages" id="chatbox"></div>
+      <div class="chatbot-input">
+        <input type="text" id="userInput" placeholder="Ask something..." />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+
+<script>
+document.getElementById('predictionForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = '';
+
+    const rawInput = document.getElementById('message').value.trim();
+    if (!rawInput) {
+        resultDiv.innerHTML = '<p class="text-danger">Please enter packet data.</p>';
+        return;
+    }
+
+    // ✅ SweetAlert Loading Popup
+    Swal.fire({
+        title: 'Analyzing Packet Data...',
+        text: 'Please wait a moment',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    try {
+        const response = await fetch('/predict', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ input_string: rawInput }),
+        });
+
+        if (!response.ok) {
+            Swal.close();
+            const errorData = await response.json();
+            resultDiv.innerHTML = `<p class="text-danger">Error: ${errorData.error || 'Unknown error'}</p>`;
+            return;
+        }
+
+        const data = await response.json();
+        if (data.error) {
+            Swal.close();
+            resultDiv.innerHTML = `<p class="text-danger">Error: ${data.error}</p>`;
+            return;
+        }
+
+        // ✅ Close loading popup when result is ready
+        Swal.close();
+
+        // Build your HTML result here (your unchanged result code follows)
+        let html = `
+            <div class="p-4 rounded shadow-lg mt-4 text-start"
+                style="
+                    background:#0f173d;
+                    border:1px solid #24306e;
+                    border-radius: 14px;
+                    padding: 25px;
+                    box-shadow: 0 0 20px rgba(0,0,0,0.35);
+                ">
+                <h4 class="text-center text-warning mb-3">Prediction Results</h4>
+                <ul class="list-group list-group-flush mb-3">
+        `;
+
+        for (const [model, prediction] of Object.entries(data.predictions)) {
+            const confidence = data.confidence[model] || "N/A";
+            html += `
+                <li class="list-group-item text-light"
+                    style="background:#0a0f2d; border:1px solid #1d275a;">
+                    <strong>${model}</strong>: ${prediction}
+                    <span class="text-white"> (Confidence: ${confidence})</span>
+                </li>`;
+        }
+
+        html += `</ul>`;
+
+        html += `
+            <div class="mt-3"
+                style="
+                    background:#0f173d;
+                    border:1px solid #24306e;
+                    border-radius:14px;
+                    padding:25px;
+                    box-shadow:0 0 20px rgba(0,0,0,0.35);
+                ">
+                <h5 class="text-white mb-3">About Attack</h5>
+                <p class="text-white">${data.attack_info}</p>
+
+                <h6 class="mt-4 text-white">Prevention Tips:</h6>
+                <ul class="text-white ps-4" style="list-style-position: inside; line-height: 1.8;">
+                    ${data.prevention_tips.map(tip => `<li>${tip}</li>`).join('')}
+                </ul>
+            </div>
+        </div>`;
+
+        resultDiv.innerHTML = html;
+
+    } catch (error) {
+        Swal.close();
+        resultDiv.innerHTML = `<p class="text-danger">An unexpected error occurred: ${error.message}</p>`;
+    }
+});
+
+function startLiveDetection() {
+
+    Swal.fire({
+        title: 'Capturing Live Packet...',
+        text: 'Analyzing your network traffic',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    fetch('/live-detect')
+        .then(res => res.json())
+        .then(data => {
+
+            Swal.close();
+
+            if (data.error) {
+                Swal.fire("Error", data.error, "error");
+                return;
+            }
+
+            const resultDiv = document.getElementById('result');
+
+            let html = `
+            <div class="p-4 rounded shadow-lg mt-4 text-start"
+                style="background:#0f173d; border:1px solid #24306e; border-radius: 14px; padding: 25px; box-shadow: 0 0 20px rgba(0,0,0,0.35);">
+
+                <h4 class="text-center text-warning mb-3">Live Detection Result</h4>
+
+                <!-- Captured Packet Data -->
+                <div class="mt-3 p-3 rounded"
+                    style="background:#101b4a; border:1px solid #2c3a7a; color:white;">
+
+                    <h5 class="text-white mb-3">Captured Live Packet Data</h5>
+
+                    <div class="row" style="row-gap: 12px;">
+                        ${Object.entries(data.live_packet_data).map(([key, val]) => `
+                            <div class="col-6">
+                                <div style="background:#0f173d; padding:10px; border-radius:6px; border:1px solid #24306e;">
+                                    <strong style="color:#9ab3ff;">${key}</strong>
+                                    <br>
+                                    <span style="color:#dce3ff;">${val}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                </div>
+
+                <ul class="list-group list-group-flush mb-3 mt-4">
+            `;
+
+            // Predictions & confidence
+            for (const [model, prediction] of Object.entries(data.predictions)) {
+                const confidence = data.confidence[model];
+
+                html += `
+                <li class="list-group-item text-light"
+                    style="background:#0a0f2d; border:1px solid #1d275a;">
+                    <strong>${model}</strong>: ${prediction}
+                    <span class="text-white"> (Confidence: ${confidence})</span>
+                </li>`;
+            }
+
+            html += `</ul>`;
+
+            // Attack Info + Tips
+            html += `
+            <div class="mt-3"
+                style="background:#0f173d; border:1px solid #24306e; border-radius:14px; padding:25px; box-shadow:0 0 20px rgba(0,0,0,0.35);">
+                
+                <h5 class="text-white mb-3">About Attack</h5>
+                <p class="text-white">${data.attack_info}</p>
+
+                <h6 class="mt-4 text-white">Prevention Tips:</h6>
+                <ul class="text-white ps-4" style="list-style-position: inside; line-height: 1.8;">
+                    ${data.prevention_tips.map(tip => `<li>${tip}</li>`).join('')}
+                </ul>
+
+            </div>
+            </div>`;
+
+            resultDiv.innerHTML = html;
+        })
+        .catch(err => {
+            Swal.close();
+            Swal.fire("Error", err.toString(), "error");
+        });
+}
+
+
+
+
+function toggleChat() {
+    const chatContainer = document.getElementById("chatContainer");
+    chatContainer.style.display =
+        chatContainer.style.display === "flex" ? "none" : "flex";
+}
+
+function sendMessage() {
+    const userInputElement = document.getElementById("userInput");
+    const userInput = userInputElement.value.trim();
+    const chatLog = document.getElementById("chatbox");
+
+    if (!userInput) return;
+
+    //  Add user bubble
+    const userBubble = document.createElement("div");
+    userBubble.className = "chat-bubble user-msg";
+    userBubble.textContent = userInput;
+    chatLog.appendChild(userBubble);
+
+    userInputElement.value = "";
+    chatLog.scrollTop = chatLog.scrollHeight;
+
+    fetch("/chatbot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userInput })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const botBubble = document.createElement("div");
+        botBubble.className = "chat-bubble bot-msg";
+
+        // supports markdown-like newlines from backend
+        botBubble.innerHTML = data.reply.replace(/\n/g, "<br>");
+
+        chatLog.appendChild(botBubble);
+        chatLog.scrollTop = chatLog.scrollHeight;
+    })
+    .catch(err => {
+        const errorBubble = document.createElement("div");
+        errorBubble.className = "chat-bubble bot-msg";
+        errorBubble.textContent = "Error contacting server.";
+        chatLog.appendChild(errorBubble);
+        chatLog.scrollTop = chatLog.scrollHeight;
+    });
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  {% endblock body %}
