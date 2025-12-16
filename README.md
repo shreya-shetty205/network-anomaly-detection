@@ -63,10 +63,5 @@ python app.py
 Open your browser and go to:
 http://127.0.0.1:5011
 
-## Notes
-- Do not upload `.env` or dataset files to GitHub.
-- This project is intended for academic and learning purposes.
-- API keys must be kept private and secure.
 
----
 
